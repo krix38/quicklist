@@ -5,5 +5,5 @@ import javax.persistence.Embeddable
 @Embeddable
 data class Item (
         val name: String,
-        val link: String?
+        val state: ItemState
 )
