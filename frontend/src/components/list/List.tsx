@@ -1,15 +1,15 @@
-import React from 'react';
-import {ListModel} from "../../services/api/model/ListModel";
+import * as React from 'react';
 import {Item} from "../item/Item";
+import {ListModel} from "../../services/api/model/ListModel";
 
 interface ListProps {
-    list: ListModel;
+    model: ListModel;
 }
 
-export const List = ({list: {items}}: ListProps) => (
+export const List = ({model}: ListProps) => (
     <>
-        {items.map(item => (
-            <Item item={item}/>
+        {model.items.map(item => (
+            <div><Item item={item}/></div>
         ))}
     </>
 );

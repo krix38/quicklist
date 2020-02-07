@@ -20,6 +20,7 @@ class EmitterService(
         val uuid = java.util.UUID.randomUUID().toString()
         val newEmitter = SseEmitter().apply {
             setEmitterCallbacks(id, uuid)
+            send(uuid)
         }
         emittersMap.getOrPut(id) { ConcurrentHashMap() }[uuid] = newEmitter
         return newEmitter
@@ -33,9 +34,9 @@ class EmitterService(
         }
     }
 
-    private fun sendEvent(emitter: SseEmitter, event: MutableSet<ResponseBodyEmitter.DataWithMediaType>) {
+    private fun sendEvent(emitter: SseEmitter?, event: MutableSet<ResponseBodyEmitter.DataWithMediaType>) {
         try {
-            emitter.send(event)
+            emitter?.send(event)
         } catch (exception: IOException) {
             logger.error(exception.message)
         }

@@ -15,5 +15,5 @@ data class QuickList(
                 strategy = "org.hibernate.id.UUIDGenerator")
         val id: String?,
         @ElementCollection
-        val items: MutableSet<Item> = mutableSetOf()
+        val items: MutableList<Item> = mutableListOf()
 )
