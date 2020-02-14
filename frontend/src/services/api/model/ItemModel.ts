@@ -1,5 +1,7 @@
 
+export type ItemState = "IN_CART" | "UNAVAILABLE" | "UNKNOWN";
+
 export interface ItemModel {
     name: string;
-    state: "IN_CART" | "UNAVAILABLE" | "UNKNOWN";
+    state: ItemState;
 }
