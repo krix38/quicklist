@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {ItemModel, ItemState} from "../../services/api/model/ItemModel";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -7,9 +8,9 @@ import HelpIcon from '@material-ui/icons/Help';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import {RemoveItemCallback, UpdateItemStateCallback} from "../listForm/ListForm";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-
+import {RemoveItemCallback, UpdateItemStateCallback} from "../listForm/useListContext.hook";
+import {useItemStyles} from "./useItemStyles";
 
 interface ItemProps {
     index: number
@@ -24,17 +25,27 @@ const stateIcon = (state: ItemState) => ({
     'UNAVAILABLE': <ErrorIcon/>
 }[state]);
 
-export const Item = ({index, item: {name, state}, remove, updateItemState}: ItemProps) => (
-    <ListItem button onClick={() => updateItemState(index)}>
-        <ListItemIcon>
-            {stateIcon(state)}
-        </ListItemIcon>
-        <ListItemText primary={name}/>
-        <ListItemSecondaryAction>
-            <HighlightOffIcon
-                onClick={() => remove(index)}
-            />
-        </ListItemSecondaryAction>
+export const Item = ({index, item: {name, state}, remove, updateItemState}: ItemProps) => {
+    const classes = useItemStyles();
+    return (
+        <ListItem
+            button
+            onClick={() => updateItemState(index)}
+            className={clsx({
+                [classes.listItemInCart]: state === 'IN_CART',
+                [classes.listItemUnavailable]: state === 'UNAVAILABLE'
+            })}
+        >
+            <ListItemIcon>
+                {stateIcon(state)}
+            </ListItemIcon>
+            <ListItemText primary={name}/>
+            <ListItemSecondaryAction>
+                <HighlightOffIcon
+                    onClick={() => remove(index)}
+                />
+            </ListItemSecondaryAction>
 
-    </ListItem>
-);
+        </ListItem>
+    );
+};

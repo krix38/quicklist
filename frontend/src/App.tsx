@@ -8,8 +8,7 @@ import {
 import {ListCreator} from "./components/listCreator/ListCreator";
 import {ListForm} from "./components/listForm/ListForm";
 import Grid from "@material-ui/core/Grid";
-
-type TParams = { id: string };
+import {NewListButton} from "./components/newListButton/NewListButton";
 
 const App: React.FC = () => {
     return (
@@ -22,9 +21,13 @@ const App: React.FC = () => {
             <Router>
                 <Switch>
                     <Route exact path="/">
+                        <NewListButton/>
+                    </Route>
+                    <Route path="/new">
                         <ListCreator/>
                     </Route>
                     <Route path="/:id">
+                        <NewListButton/>
                         <ListForm/>
                     </Route>
                 </Switch>

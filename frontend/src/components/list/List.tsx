@@ -1,29 +1,19 @@
 import * as React from 'react';
 import {Item} from "../item/Item";
 import {ListModel} from "../../services/api/model/ListModel";
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import MaterialList from '@material-ui/core/List';
-import {RemoveItemCallback, UpdateItemStateCallback} from "../listForm/ListForm";
+import {RemoveItemCallback, UpdateItemStateCallback} from "../listForm/useListContext.hook";
+import {useListStyles} from "./useListStyles.hook";
 
 
 interface ListProps {
     model: ListModel;
-    onRemove: (list: ListModel) => RemoveItemCallback;
-    onItemUpdate: (list: ListModel) => UpdateItemStateCallback;
+    onRemove: RemoveItemCallback;
+    onItemUpdate: UpdateItemStateCallback;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-            maxWidth: 360,
-            backgroundColor: theme.palette.background.paper,
-        },
-    }),
-);
-
 export const List = ({model, onRemove, onItemUpdate}: ListProps) => {
-    const classes = useStyles();
+    const classes = useListStyles();
     return (
         <div className={classes.root}>
             <MaterialList component="nav">
@@ -31,8 +21,8 @@ export const List = ({model, onRemove, onItemUpdate}: ListProps) => {
                 <div>
                     <Item
                         item={item}
-                        remove={onRemove(model)}
-                        updateItemState={onItemUpdate(model)}
+                        remove={onRemove}
+                        updateItemState={onItemUpdate}
                         index={index}
                     />
                 </div>

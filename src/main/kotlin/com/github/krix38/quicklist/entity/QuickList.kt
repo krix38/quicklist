@@ -1,6 +1,8 @@
 package com.github.krix38.quicklist.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.GenericGenerator
+import java.time.LocalDateTime
 import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -15,5 +17,7 @@ data class QuickList(
                 strategy = "org.hibernate.id.UUIDGenerator")
         val id: String?,
         @ElementCollection
-        val items: MutableList<Item> = mutableListOf()
+        val items: MutableList<Item> = mutableListOf(),
+        @JsonIgnore
+        var updateDate: LocalDateTime = LocalDateTime.now()
 )
