@@ -26,6 +26,3 @@ interface QuickListRepository : PagingAndSortingRepository<QuickList, String> {
     @Transactional
     fun deleteByUpdateDateBefore(expiryDate: LocalDateTime)
 }
-
-///$ curl -X POST -H "Content-Type: application/json" http://localhost:8080/api/lists -d "{ \"items\": [{ \"name\": \"ziemnioki\", \"state\": \"IN_CART\" }] }"
-///$ curl -X PATCH -H "Content-Type: application/json" http://localhost:8080/api/lists/7a6608a8-fb38-482f-b24c-5627241349c1 -d "{ \"items\": [{ \"name\": \"ziemnioksssi\", \"state\: \"IN_CART\" }] }"

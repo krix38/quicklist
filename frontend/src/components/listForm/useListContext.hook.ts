@@ -1,5 +1,5 @@
 import {ListModel} from "../../services/api/model/ListModel";
-import {ListService} from "../../services/api/service/ListService";
+import {isListFetchingError, ListError, ListService} from "../../services/api/service/ListService";
 import {ItemState} from "../../services/api/model/ItemModel";
 import {useEffect, useState} from "react";
 import {EventService} from "../../services/api/service/EventService";
@@ -8,8 +8,10 @@ export type RemoveItemCallback = (index: number) => void;
 export type UpdateItemStateCallback = (index: number) => void;
 export type AddItemCallback = (newItem?: string) => void;
 type SetListCallback = (list: ListModel) => void;
+type SetErrorCallback = (error: ListError) => void;
 
 export const useListContext = (id: string) => {
+    const [error, setError] = useState<ListError>();
     const [list, setList] = useState<ListModel>();
     const [listening, setListening] = useState(false);
     const removeItem = removeItemFromList(list);
@@ -17,15 +19,16 @@ export const useListContext = (id: string) => {
     const addItem = addNewItemOnList(list);
     useEffect(() => {
         if (!listening) {
-            EventService.getEventStream(id).onmessage = () => {
-                fetchList(id, setList)
+            EventService.createEventSource(id);
+            EventService.getEventSource(id).onmessage = () => {
+                fetchList(id, setList, setError)
             };
             setListening(true);
-            fetchList(id, setList);
+            fetchList(id, setList, setError);
         }
     }, [listening, list]);
 
-    return {list, removeItem, addItem, updateItemState};
+    return {list, removeItem, addItem, updateItemState, error};
 };
 
 const addNewItemOnList = (list?: ListModel): AddItemCallback => (newItem?: string) =>
@@ -64,5 +67,15 @@ const updateItemStateInList = (list?: ListModel): UpdateItemStateCallback => (in
         }
     ) : undefined;
 
-const fetchList = (id: string, setList: SetListCallback) => ListService.getList(id).then(fetchedList => setList(fetchedList));
+const fetchList = (id: string, setList: SetListCallback, setError: SetErrorCallback) =>
+    ListService
+        .getList(id)
+        .then(fetchedList => {
+            setList(fetchedList);
+        })
+        .catch(error => {
+            if(isListFetchingError(error)){
+                setError(error);
+            } else throw error
+        });
 

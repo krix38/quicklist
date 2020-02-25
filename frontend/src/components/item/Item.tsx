@@ -42,6 +42,7 @@ export const Item = ({index, item: {name, state}, remove, updateItemState}: Item
             <ListItemText primary={name}/>
             <ListItemSecondaryAction>
                 <HighlightOffIcon
+                    fontSize={"large"}
                     onClick={() => remove(index)}
                 />
             </ListItemSecondaryAction>

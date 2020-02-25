@@ -4,13 +4,17 @@ import {List} from "../list/List";
 import TextField from '@material-ui/core/TextField';
 import {useListContext} from "./useListContext.hook";
 import {useItemInputContext} from "./useItemInputContext.hook";
+import {ListErrorModal} from "../listErrorModal/ListErrorModal";
 
 export const ListForm = () => {
     const {id} = useParams<{ id: string }>();
-    const {list, removeItem, addItem, updateItemState} = useListContext(id);
+    const {list, removeItem, addItem, updateItemState, error} = useListContext(id);
     const {newItem, setItem, addItemFromInputToList} = useItemInputContext(addItem);
+    if (error) {
+        return (<ListErrorModal error={error}/>);
+    }
     if (!list) {
-        return null
+        return null;
     }
     return (
         <>
