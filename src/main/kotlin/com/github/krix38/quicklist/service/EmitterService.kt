@@ -26,6 +26,7 @@ class EmitterService(
         return newEmitter
     }
 
+    @Synchronized
     fun sendMessageToAllEmitters(id: String?, event: MutableSet<ResponseBodyEmitter.DataWithMediaType>){
         if(!id.isNullOrEmpty()){
             emittersMap[id]?.forEachValue(1) {
