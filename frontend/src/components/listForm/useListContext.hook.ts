@@ -26,7 +26,7 @@ export const useListContext = (id: string) => {
             setListening(true);
             fetchList(id, setList, setError);
         }
-    }, [listening, list]);
+    }, [id, listening, list]);
 
     return {list, removeItem, addItem, updateItemState, error};
 };
