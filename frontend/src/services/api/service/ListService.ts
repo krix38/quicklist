@@ -2,7 +2,7 @@ import axios from "axios";
 import { ListModel } from "../model/ListModel";
 import {BASE_URL} from "./ServicesConfig";
 
-export type ListErrorType = "LIST_NOT_FOUND" | "SERVER_ERROR" | "UNHANDLED";
+export type ListErrorType = "LIST_NOT_FOUND" | "SERVER_ERROR" | "INVALID_VERSION" | "UNHANDLED";
 
 export class ListError extends Error {
     constructor(type: ListErrorType, id?: string,) {
@@ -12,7 +12,7 @@ export class ListError extends Error {
     public listErrorType: ListErrorType;
 }
 
-export const isListFetchingError = (error: any): error is ListError => (error as ListError).listErrorType !== undefined;
+export const isListError = (error: any): error is ListError => (error as ListError).listErrorType !== undefined;
 
 export class ListService {
     private static apiUrl = (path: string) =>  ListService.API_URL + path;
@@ -41,7 +41,12 @@ export class ListService {
     static updateList = (id: string, list: ListModel) => new Promise<ListModel>((resolve, reject) => {
         axios.patch<ListModel>(`${ListService.LISTS_PATH}/${id}`, list)
             .then(response => resolve(response.data))
-            .catch(error => ListService.commonListErrorHandling(error, reject, id));
+            .catch(error => {
+                if (error.response.status === 409) {
+                    return reject(new ListError("INVALID_VERSION", id))
+                }
+                return ListService.commonListErrorHandling(error, reject, id);
+            })
     });
 
     private static commonListErrorHandling(error: any, reject: (reason?: any) => void, id?: string) {

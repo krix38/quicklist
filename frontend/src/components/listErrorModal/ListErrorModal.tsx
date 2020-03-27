@@ -8,7 +8,7 @@ import {useModalStyles} from "./useModalStyles.hook";
 import {EventService} from "../../services/api/service/EventService";
 
 interface ListErrorProps {
-    error: ListError;
+    displayError: ListError;
 }
 
 const errorMessageMapping: {
@@ -16,10 +16,11 @@ const errorMessageMapping: {
 } = {
     'SERVER_ERROR': 'Server error!',
     'UNHANDLED': 'Unhandled error!',
-    'LIST_NOT_FOUND': 'List not found!'
+    'LIST_NOT_FOUND': 'List not found!',
+    'INVALID_VERSION': 'Invalid version!',
 };
 
-export const ListErrorModal = ( { error }: ListErrorProps ) => {
+export const ListErrorModal = ( { displayError }: ListErrorProps ) => {
     const classes = useModalStyles();
     const [open, setOpen] = React.useState(true);
     const history = useHistory();
@@ -41,7 +42,7 @@ export const ListErrorModal = ( { error }: ListErrorProps ) => {
         >
             <Fade in={open}>
                 <div className={classes.paper}>
-                    <p>{errorMessageMapping[error.listErrorType]}</p>
+                    <p>{errorMessageMapping[displayError.listErrorType]}</p>
                 </div>
             </Fade>
         </Modal>

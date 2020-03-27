@@ -4,8 +4,11 @@ import {useState} from "react";
 type SetItemCallback = (item: string) => void;
 
 const addItemFromInputCallback = (setItem: SetItemCallback, addItemToList: AddItemCallback) => (newItem?: string) => {
-    addItemToList(newItem);
-    setItem("");
+    const addedItemToList = addItemToList(newItem);
+    if (addedItemToList) {
+        addedItemToList
+            .then( () => setItem(""))
+    }
 };
 
 export const useItemInputContext = (addItemToListCallback: AddItemCallback) => {

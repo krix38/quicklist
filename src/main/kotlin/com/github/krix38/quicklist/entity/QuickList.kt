@@ -18,6 +18,7 @@ data class QuickList(
         val id: String?,
         @ElementCollection
         val items: MutableList<Item> = mutableListOf(),
+        var version: Long = 0,
         @JsonIgnore
         var updateDate: LocalDateTime = LocalDateTime.now()
 )

@@ -8,10 +8,10 @@ import {ListErrorModal} from "../listErrorModal/ListErrorModal";
 
 export const ListForm = () => {
     const {id} = useParams<{ id: string }>();
-    const {list, removeItem, addItem, updateItemState, error} = useListContext(id);
+    const {list, removeItem, addItem, updateItemState, displayError} = useListContext(id);
     const {newItem, setItem, addItemFromInputToList} = useItemInputContext(addItem);
-    if (error) {
-        return (<ListErrorModal error={error}/>);
+    if (displayError) {
+        return (<ListErrorModal displayError={displayError}/>);
     }
     if (!list) {
         return null;
