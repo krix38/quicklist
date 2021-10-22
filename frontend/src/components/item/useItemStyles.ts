@@ -1,6 +1,5 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import lightGreen from "@material-ui/core/colors/lightGreen";
-import red from "@material-ui/core/colors/red";
+import makeStyles from '@mui/styles/makeStyles';
+import { lightGreen, red } from '@mui/material/colors';
 
 export const useItemStyles = makeStyles({
     listItemInCart: {

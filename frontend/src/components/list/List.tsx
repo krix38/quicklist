@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Item} from "../item/Item";
 import {ListModel} from "../../services/api/model/ListModel";
-import MaterialList from '@material-ui/core/List';
+import MaterialList from '@mui/material/List';
 import {RemoveItemCallback, UpdateItemStateCallback} from "../listForm/useListContext.hook";
 import {useListStyles} from "./useListStyles.hook";
 

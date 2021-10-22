@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ListModel} from "../../services/api/model/ListModel";
 import {Redirect} from 'react-router-dom';
 import {ListService, ListError, isListError} from "../../services/api/service/ListService";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import {useLoaderStyles} from './useLoaderStyles';
 import {ListErrorModal} from '../listErrorModal/ListErrorModal';
 

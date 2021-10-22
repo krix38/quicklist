@@ -1,8 +1,8 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
 import {ListError, ListErrorType} from "../../services/api/service/ListService";
 import {useModalStyles} from "./useModalStyles.hook";
 import {EventService} from "../../services/api/service/EventService";

@@ -1,8 +1,11 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 import { ListModel } from "../model/ListModel";
 import {BASE_URL} from "./ServicesConfig";
 
 export type ListErrorType = "LIST_NOT_FOUND" | "SERVER_ERROR" | "INVALID_VERSION" | "UNHANDLED";
+
+axiosRetry(axios, { retries: 5 });
 
 export class ListError extends Error {
     constructor(type: ListErrorType, id?: string,) {
@@ -39,7 +42,7 @@ export class ListService {
     });
 
     static updateList = (id: string, list: ListModel) => new Promise<ListModel>((resolve, reject) => {
-        axios.patch<ListModel>(`${ListService.LISTS_PATH}/${id}`, list)
+        axios.put<ListModel>(`${ListService.LISTS_PATH}/${id}`, list)
             .then(response => resolve(response.data))
             .catch(error => {
                 if (error.response.status === 409) {
@@ -50,7 +53,7 @@ export class ListService {
     });
 
     private static commonListErrorHandling(error: any, reject: (reason?: any) => void, id?: string) {
-        if (error.response.status > 500) {
+        if (error.response.status >= 500) {
             return reject(new ListError("SERVER_ERROR", id))
         }
         return reject(new ListError( "UNHANDLED", id))
