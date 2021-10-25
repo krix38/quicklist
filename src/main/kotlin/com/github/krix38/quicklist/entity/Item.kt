@@ -1,9 +1,6 @@
 package com.github.krix38.quicklist.entity
 
-import javax.persistence.Embeddable
-
-@Embeddable
 data class Item (
-        val name: String,
-        val state: ItemState
+        var name: String,
+        var state: ItemState
 )

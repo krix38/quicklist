@@ -20,8 +20,8 @@ class QuickListEventHandler(
 
     @HandleBeforeSave
     fun updateDate(quickList: QuickList) = quickList.id?.let {
-        val currentVersion = quickListRepository.findVersionById(quickList.id)
-        if (currentVersion == quickList.version) {
+        val persistedList = quickListRepository.findVersionById(quickList.id)
+        if (persistedList?.version == quickList.version) {
             quickList.updateDate = LocalDateTime.now()
             quickList.version++
         } else {
