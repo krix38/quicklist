@@ -22,6 +22,7 @@ export const ListForm = () => {
                 label="Add item"
                 onChange={event => setItem(event.target.value)}
                 value={newItem}
+                variant="standard"
                 onKeyDown={(event) => {
                     if (event.key === 'Enter') {
                         addItemFromInputToList(newItem);

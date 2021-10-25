@@ -9,19 +9,18 @@ import {ListCreator} from "./components/listCreator/ListCreator";
 import {ListForm} from "./components/listForm/ListForm";
 import Grid from "@mui/material/Grid";
 import {NewListButton} from "./components/newListButton/NewListButton";
-import { ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from "@mui/material";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material";
 import { createTheme } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 import { indigo } from '@mui/material/colors';
 
-const theme = createTheme(adaptV4Theme({
-    // palette: createPalette({
-    //     type: 'light',
-    //     background: {
-    //         default: indigo[100],
-    //     },
-    // }),
-}));
+const theme = createTheme({
+    palette: {
+            background: {
+                default: indigo[100],
+            },
+        }
+});
 
 const App: React.FC = () => {
     return (
