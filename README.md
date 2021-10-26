@@ -9,4 +9,4 @@ Use your os specific wrapper script, e.g on mac just type `./gradlew clean build
 ## Running
 
 Simply `java -jar build/libs/quicklist-0.0.1-SNAPSHOT.jar`
-By default app will start on localhost:8080 with in memory h2 enabled. You can connect quicklist to postgres by toggling `postgres` spring profile (and setting spring datasource env vars)
+By default app will start on localhost:8080 with embedded mongo enabled. You can connect quicklist to existing mongodb by toggling `prod` spring profile and setting MONGODB_URI environment variable
