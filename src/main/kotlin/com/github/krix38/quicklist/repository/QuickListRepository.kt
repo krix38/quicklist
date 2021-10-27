@@ -4,28 +4,24 @@ import com.github.krix38.quicklist.entity.QuickList
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.data.jpa.repository.Modifying
-import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.data.mongodb.repository.Query
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 import org.springframework.data.rest.core.annotation.RestResource
-import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @RepositoryRestResource(collectionResourceRel = "lists", path = "lists")
-interface QuickListRepository : PagingAndSortingRepository<QuickList, String> {
+interface QuickListRepository : MongoRepository<QuickList, String> {
     @RestResource(exported = false)
     override fun deleteAll()
     @RestResource(exported = false)
-    override fun findAll(): MutableIterable<QuickList>
+    override fun findAll(): MutableList<QuickList>
     @RestResource(exported = false)
-    override fun findAll(sort: Sort): MutableIterable<QuickList>
+    override fun findAll(sort: Sort): MutableList<QuickList>
     @RestResource(exported = false)
     override fun findAll(pageable: Pageable): Page<QuickList>
     @RestResource(exported = false)
-    @Modifying
-    @Transactional
     fun deleteByUpdateDateBefore(expiryDate: LocalDateTime)
-    @Query("select q.version from QuickList q where q.id = ?1")
-    fun findVersionById(id: String): Long?
+    @Query("{ 'id' :  ?0 }")
+    fun findVersionById(id: String): QuickList?
 }

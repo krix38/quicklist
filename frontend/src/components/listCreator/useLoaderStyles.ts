@@ -1,5 +1,8 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import {createStyles, Theme} from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from "@mui/material";
+
+
+import createStyles from '@mui/styles/createStyles';
 
 
 export const useLoaderStyles = makeStyles((theme: Theme) =>

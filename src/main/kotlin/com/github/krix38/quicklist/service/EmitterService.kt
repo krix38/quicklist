@@ -34,7 +34,6 @@ class EmitterService(
         }
     }
 
-    @Synchronized
     private fun sendEvent(emitter: SseEmitter?, event: MutableSet<ResponseBodyEmitter.DataWithMediaType>) {
         try {
             emitter?.send(event)

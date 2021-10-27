@@ -1,14 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
 import {ItemModel, ItemState} from "../../services/api/model/ItemModel";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import {ListItem} from "@material-ui/core";
-import HelpIcon from '@material-ui/icons/Help';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import {ListItem} from "@mui/material";
+import HelpIcon from '@mui/icons-material/Help';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import {RemoveItemCallback, UpdateItemStateCallback} from "../listForm/useListContext.hook";
 import {useItemStyles} from "./useItemStyles";
 

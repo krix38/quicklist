@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import {List} from "../list/List";
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import {useListContext} from "./useListContext.hook";
 import {useItemInputContext} from "./useItemInputContext.hook";
 import {ListErrorModal} from "../listErrorModal/ListErrorModal";
@@ -22,6 +22,7 @@ export const ListForm = () => {
                 label="Add item"
                 onChange={event => setItem(event.target.value)}
                 value={newItem}
+                variant="standard"
                 onKeyDown={(event) => {
                     if (event.key === 'Enter') {
                         addItemFromInputToList(newItem);

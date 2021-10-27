@@ -1,6 +1,6 @@
 import {useHistory} from "react-router";
-import FiberNew from "@material-ui/icons/FiberNew";
-import IconButton from "@material-ui/core/IconButton"
+import FiberNew from "@mui/icons-material/FiberNew";
+import IconButton from "@mui/material/IconButton"
 import React from "react";
 import {EventService} from "../../services/api/service/EventService";
 
@@ -14,7 +14,7 @@ export const NewListButton = () => {
                 EventService.closeAllEventSources();
                 history.push('/new');
             }}
-        >
+            size="large">
             <FiberNew fontSize={"large"}/>
         </IconButton>
     );
