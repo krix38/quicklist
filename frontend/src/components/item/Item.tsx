@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from "react";
 import clsx from 'clsx';
 import {ItemModel, ItemState} from "../../services/api/model/ItemModel";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import {ListItem} from "@mui/material";
+import {CircularProgress, ListItem} from "@mui/material";
 import HelpIcon from '@mui/icons-material/Help';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -27,23 +27,37 @@ const stateIcon = (state: ItemState) => ({
 
 export const Item = ({index, item: {name, state}, remove, updateItemState}: ItemProps) => {
     const classes = useItemStyles();
+    const [isLoading, setLoading] = useState(false);
+    const [itemState, setItemState] = useState(state);
     return (
         <ListItem
             button
-            onClick={() => updateItemState(index)}
+            onClick={() => {
+                setLoading(true);
+                updateItemState(index)
+                ?.then((result) => setItemState(result.items[index].state))
+                .finally(() => setLoading(false));
+            }}
             className={clsx({
-                [classes.listItemInCart]: state === 'IN_CART',
-                [classes.listItemUnavailable]: state === 'UNAVAILABLE'
+                [classes.listItemInCart]: itemState === 'IN_CART',
+                [classes.listItemUnavailable]: itemState === 'UNAVAILABLE'
             })}
         >
             <ListItemIcon>
-                {stateIcon(state)}
+            { 
+                isLoading 
+                    ? <CircularProgress size={25} color="secondary"/> 
+                    : stateIcon(itemState)
+            }
             </ListItemIcon>
             <ListItemText primary={name}/>
             <ListItemSecondaryAction>
                 <HighlightOffIcon
                     fontSize={"large"}
-                    onClick={() => remove(index)}
+                    onClick={() => {
+                        setLoading(true);
+                        remove(index)?.finally(() => setLoading(false));
+                    }}
                 />
             </ListItemSecondaryAction>
 
